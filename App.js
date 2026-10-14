@@ -1,20 +1,66 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { AppProvider } from './src/context/AppContext';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Informativa } from "./src/componentes/informativa";
+import Capturados from "./src/componentes/capturados";
+import Favoritos from "./src/componentes/favoritos";
+import Lista from "./src/componentes/lista";
+import Usuario from "./src/componentes/usuario";
+import Pokemon from "./src/componentes/pokemon";
+
+
+const Stack = createStackNavigator();
+
+function ListaStack() {
+return (
+<Stack.Navigator>
+<Stack.Screen name="Lista" component={Lista} />
+<Stack.Screen name="Pokemon" component={Pokemon} />
+</Stack.Navigator>
+);
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+function FavoritosStack() {
+return (
+<Stack.Navigator>
+<Stack.Screen name="Favoritos" component={Favoritos} />
+<Stack.Screen name="Pokemon" component={Pokemon} />
+</Stack.Navigator>
+);
+}
+
+function CapturadosStack() {
+return (
+<Stack.Navigator>
+<Stack.Screen name="Capturados" component={Capturados} />
+<Stack.Screen name="Pokemon" component={Pokemon} />
+</Stack.Navigator>
+);
+}
+
+const Tab = createBottomTabNavigator();
+export default function App() {
+  return (
+
+    <AppProvider>
+      <NavigationContainer>
+        <Tab.Navigator>
+
+          
+          <Tab.Screen name="Lista" component={ListaStack} />
+          <Tab.Screen name="Informativa" component={Informativa} />
+          <Tab.Screen name="Capturados" component={CapturadosStack} />
+          <Tab.Screen name="Favoritos" component={FavoritosStack} />
+          <Tab.Screen name="Usuario" component={Usuario} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </AppProvider>
+
+    
+  );
+}
